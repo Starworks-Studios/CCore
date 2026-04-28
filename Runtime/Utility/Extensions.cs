@@ -136,4 +136,8 @@ public static class Extensions
         foreach (var field in fields) field.SetValue(copy, field.GetValue(original));
         return copy as T;
     }
+    public static bool Contains(this LayerMask mask, int layer)
+    {
+        return (mask & (1 << layer)) != 0;
+    }
 }
