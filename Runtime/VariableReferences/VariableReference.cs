@@ -178,7 +178,7 @@ public class BoolReference : VariableReference<bool>
 [System.Serializable]
 public class GameObjectReference : VariableReference<GameObject>
 {
-
+    public GameObjectReference(bool useConstant = false) : base(useConstant){}
 }
 [System.Serializable]
 public class AnimationCurveReference : VariableReference<AnimationCurve> { }
