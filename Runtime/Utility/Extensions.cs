@@ -101,6 +101,14 @@ public static class Extensions
         }
         return result;
     }
+    public static T MinElement<T>(this IEnumerable<T> collection, System.Func<T, float> selector)
+    {
+        return collection.Aggregate((min, x) => (selector(x) < selector(min) ? x : min));
+    }
+    public static T MaxElement<T>(this IEnumerable<T> collection, System.Func<T, float> selector)
+    {
+        return collection.Aggregate((min, x) => (selector(x) > selector(min) ? x : min));
+    }
     /// <summary>
     /// Modify the float array so that the sum of elements is 1
     /// </summary>
