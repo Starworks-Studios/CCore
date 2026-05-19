@@ -10,10 +10,10 @@ public class TimescaleMultComponent : MonoBehaviour
     }
     private void OnEnable()
     {
-        TimescaleKeeper.instance?.timeScale.AddModifier(floatMult);
+        TimescaleKeeper.timeScale.AddModifier(floatMult);
     }
     private void OnDisable()
     {
-        TimescaleKeeper.instance?.timeScale.RemoveModifier(floatMult);
+        TimescaleKeeper.timeScale.RemoveModifier(floatMult);
     }
 }

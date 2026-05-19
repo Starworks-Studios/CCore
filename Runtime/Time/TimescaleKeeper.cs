@@ -9,7 +9,7 @@ using DG.Tweening;
 public class TimescaleKeeper : MonoBehaviour
 {
     public BoolReference isPaused;
-    public FloatModVariable timeScale = new FloatModVariable(1f);
+    public static FloatModVariable timeScale = new FloatModVariable(1f);
 
     private FloatMultiplier pausedModifier = new FloatMultiplier(1f);
 
@@ -70,9 +70,9 @@ public class TimescaleKeeper : MonoBehaviour
     public static void ScaleTimeFor(float scale, float realTimeDuration)
     {
         var mod = new FloatMultiplier(scale);
-        TimescaleKeeper.instance.timeScale.AddModifier(mod);
+        timeScale.AddModifier(mod);
         var s = DOTween.Sequence().SetUpdate(true);
         s.AppendInterval(realTimeDuration);
-        s.AppendCallback(() => { TimescaleKeeper.instance.timeScale.RemoveModifier(mod); });
+        s.AppendCallback(() => { timeScale.RemoveModifier(mod); });
     }
 }
