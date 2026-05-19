@@ -162,16 +162,16 @@ public class DoubleReference : VariableReference<double>
 public class IntReference : VariableReference<int>
 {
     // Operations mutate
-    public static IntReference operator +(IntReference a, int b)
-    {
-        a.Value += b;
-        return a;
-    }
-    public static IntReference operator -(IntReference a, int b)
-    {
-        a.Value -= b;
-        return a;
-    }
+    //public static IntReference operator +(IntReference a, int b)
+    //{
+    //    a.Value += b;
+    //    return a;
+    //}
+    //public static IntReference operator -(IntReference a, int b)
+    //{
+    //    a.Value -= b;
+    //    return a;
+    //}
 }
 [System.Serializable]
 public class BoolReference : VariableReference<bool>
