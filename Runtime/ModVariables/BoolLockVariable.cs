@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class BoolLock : Modifier<bool, bool>
 {
@@ -28,8 +29,10 @@ public class BoolLock : Modifier<bool, bool>
 }
 public class BoolLockVariable : ModVariable<bool, BoolLock>
 {
+    List<BoolLockVariable> subLockVars = new();
     public bool IsLocked()
     {
+        if (subLockVars.Any(lockVar => lockVar.IsLocked())) return true;
         return GetValue();
     }
     protected override bool BaseValue()
@@ -45,5 +48,9 @@ public class BoolLockVariable : ModVariable<bool, BoolLock>
     public void AddLock(BoolLock newLock)
     {
         AddModifier(newLock);
+    }
+    public void AlsoLockWhen(BoolLockVariable otherLockVar)
+    {
+        subLockVars.Add(otherLockVar);
     }
 }
