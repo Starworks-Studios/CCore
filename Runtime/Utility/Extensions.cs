@@ -148,10 +148,8 @@ public static class Extensions
     {
         return (mask & (1 << layer)) != 0;
     }
-    /// <summary>
-    /// UNTESTED
-    /// </summary>
-    public static void ForEachBackward<T>(this IOrderedEnumerable<T> e, System.Action<T> a)
+
+    public static void ForEachBackward<T>(this IEnumerable<T> e, System.Action<T> a)
     {
         for(int i = e.Count()-1; i >= 0; --i)
         {
