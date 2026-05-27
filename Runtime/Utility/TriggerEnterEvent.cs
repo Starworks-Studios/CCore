@@ -7,6 +7,7 @@ public class TriggerEnterEvent : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!isActiveAndEnabled) return;
         triggerEvent?.Invoke();
     }
 }
