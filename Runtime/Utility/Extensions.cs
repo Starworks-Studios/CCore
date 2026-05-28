@@ -149,6 +149,16 @@ public static class Extensions
         return (mask & (1 << layer)) != 0;
     }
 
+    public static bool IsEmpty<T>(this IEnumerable<T> source)
+    {
+        if (source == null) return true;
+        return source.Count() <= 0;
+    }
+    public static void ForEach<T>(this IEnumerable<T> source, System.Action<T> action)
+    {
+        foreach (var item in source)
+            action(item);
+    }
     public static void ForEachBackward<T>(this IEnumerable<T> e, System.Action<T> a)
     {
         for(int i = e.Count()-1; i >= 0; --i)
