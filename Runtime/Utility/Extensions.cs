@@ -130,6 +130,13 @@ public static class Extensions
         b = newVal;
         return false;
     }
+    /// <summary>
+    /// Tries to set the bool and returns whether it changed state
+    /// </summary>
+    public static bool TryChange(this ref bool b, bool newVal)
+    {
+        return !b.TrySet(newVal);
+    }
     public static int EvaluateRoundedInt(this ParticleSystem.MinMaxCurve curve, float time)
     {
         return Mathf.RoundToInt(curve.Evaluate(time, Random.Range(0f,1f)));
