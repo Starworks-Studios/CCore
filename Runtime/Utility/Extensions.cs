@@ -174,4 +174,10 @@ public static class Extensions
         }
     }
 
+    public static void Swap<T>(ref T a, ref T b)
+    {
+        var dummy = a;
+        a = b;
+        b = dummy;
+    }
 }

@@ -32,7 +32,15 @@ public static class VectorExtensions
     {
         return Mathf.Lerp(v2.x, v2.y, t);
     }
+    public static float Lerp(this Vector2Int v2, float t)
+    {
+        return Mathf.Lerp(v2.x, v2.y, t);
+    }
     public static float InverseLerp(this Vector2 v2, float value)
+    {
+        return Mathf.InverseLerp(v2.x, v2.y, value);
+    }
+    public static float InverseLerp(this Vector2Int v2, float value)
     {
         return Mathf.InverseLerp(v2.x, v2.y, value);
     }
