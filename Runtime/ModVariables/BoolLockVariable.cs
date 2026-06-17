@@ -2,18 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
-public class BoolLock : Modifier<bool, bool>
+public abstract class ABoolLock : Modifier<bool, bool>
 {
-    public bool locked = true;
-    public void SetLocked(bool locked)
-    {
-        this.locked = locked;
-        JustChanged();
-    }
+    public abstract bool IsLocked { get; }
+    public void UnlockAndRemove() { RemoveFromAllModifiables(); }
     public override bool Modify(ref bool value, in bool mode)
     {
-        if (locked)
+        if (IsLocked)
         {
             return true;
         }
@@ -22,12 +19,31 @@ public class BoolLock : Modifier<bool, bool>
             return value;
         }
     }
-    public void UnlockAndRemove()
+}
+public class BoolLock : ABoolLock
+{
+    bool locked = true;
+    public override bool IsLocked => locked;
+    public void SetLocked(bool locked)
     {
-        RemoveFromAllModifiables();
+        this.locked = locked;
+        JustChanged();
     }
 }
-public class BoolLockVariable : ModVariable<bool, BoolLock>
+public class BoolLockFunc : ABoolLock
+{
+    public override bool IsLocked => func();
+    Func<bool> func;
+    public BoolLockFunc(Func<bool> func)
+    {
+        this.func = func;
+    }
+    //public static implicit operator BoolLockFunc(Func<bool> func)
+    //{
+    //    return new BoolLockFunc(func);
+    //}
+}
+public class BoolLockVariable : ModVariable<bool, ABoolLock>
 {
     List<BoolLockVariable> subLockVars = new();
     public bool IsLocked()
@@ -45,7 +61,7 @@ public class BoolLockVariable : ModVariable<bool, BoolLock>
         AddModifier(newLock);
         return newLock;
     }
-    public void AddLock(BoolLock newLock)
+    public void AddLock(ABoolLock newLock)
     {
         AddModifier(newLock);
     }
