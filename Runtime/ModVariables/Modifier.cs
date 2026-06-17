@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Modifier
 {
     public Event ChangedEvent = new Event();
-    protected void JustChanged()
+    protected void MarkChanged()
     {
         ChangedEvent.Trigger();
     }

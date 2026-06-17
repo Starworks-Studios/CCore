@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 public class ModVariable<Data, TModifier> : ModVariable<Data, TModifier, bool> where TModifier : Modifier<Data, bool> { } // Mode defaults to bool
 
 [System.Serializable]
-public class ModVariable<Data, TModifier, Mode> : EventBroadcaster<Data>
+public class ModVariable<Data, TModifier, Mode> : IVariableAccess<Data>
     where TModifier : Modifier<Data, Mode>
 {
     //class Modifier : NewModifier<T, Mode, Data> { }
@@ -17,7 +18,7 @@ public class ModVariable<Data, TModifier, Mode> : EventBroadcaster<Data>
     //List<NewModifier<T, Mode, Data>> modifiers;
     //List<int> intList;
 
-    public Event<Data> OnChangeEvent = new Event<Data>();
+    private Event<Data> OnChangeEvent = new Event<Data>();
 
     public void AddModifier(TModifier modifier)
     {
@@ -56,7 +57,7 @@ public class ModVariable<Data, TModifier, Mode> : EventBroadcaster<Data>
         return CalculateValue(mode);
     }
 
-    protected Data CalculateValue(Mode mode)
+    protected virtual Data CalculateValue(Mode mode)
     {
         PruneModifiers();
         Data value = BaseValue();
@@ -85,5 +86,21 @@ public class ModVariable<Data, TModifier, Mode> : EventBroadcaster<Data>
     protected Mode DefaultMode()
     {
         return default(Mode);
+    }
+    public void Subscribe(Action a)
+    {
+        OnChangeEvent.Subscribe(a);
+    }
+    public void Unsubscribe(Action a)
+    {
+        OnChangeEvent.Unsubscribe(a);
+    }
+    public void Subscribe(Action<Data> a)
+    {
+        OnChangeEvent.Subscribe(a);
+    }
+    public void Unsubscribe(Action<Data> a)
+    {
+        OnChangeEvent.Unsubscribe(a);
     }
 }

@@ -27,7 +27,7 @@ public class BoolLock : ABoolLock
     public void SetLocked(bool locked)
     {
         this.locked = locked;
-        JustChanged();
+        MarkChanged();
     }
 }
 public class BoolLockFunc : ABoolLock
@@ -43,13 +43,36 @@ public class BoolLockFunc : ABoolLock
     //    return new BoolLockFunc(func);
     //}
 }
+public class BoolLockReference : ABoolLock
+{
+    BoolReference boolRef;
+    public override bool IsLocked => boolRef ? boolRef.Value : false;
+    public BoolLockReference(BoolReference boolRef)
+    {
+        this.boolRef = boolRef;
+        boolRef?.SubscribeAndCall(OnBoolValueChanged);
+    }
+    ~BoolLockReference()
+    {
+        boolRef?.Unsubscribe(OnBoolValueChanged);
+    }
+    void OnBoolValueChanged(bool newValue)
+    {
+        MarkChanged();
+    }
+
+}
 public class BoolLockVariable : ModVariable<bool, ABoolLock>
 {
     List<BoolLockVariable> subLockVars = new();
     public bool IsLocked()
     {
-        if (subLockVars.Any(lockVar => lockVar.IsLocked())) return true;
         return GetValue();
+    }
+    protected override bool CalculateValue(bool mode)
+    {
+        if (subLockVars.Any(lockVar => lockVar.IsLocked())) return true;
+        return base.CalculateValue(mode);
     }
     protected override bool BaseValue()
     {
