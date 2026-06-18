@@ -159,7 +159,8 @@ public static class Extensions
     public static bool IsEmpty<T>(this IEnumerable<T> source)
     {
         if (source == null) return true;
-        return source.Count() <= 0;
+        var enumerator = source.GetEnumerator();
+        return !enumerator.MoveNext();
     }
     public static void ForEach<T>(this IEnumerable<T> source, System.Action<T> action)
     {
