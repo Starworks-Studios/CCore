@@ -142,6 +142,10 @@ public class VariableReference<T> : ISerializationCallbackReceiver, IVariableAcc
 [System.Serializable]
 public class FloatReference : VariableReference<float>
 {
+    public FloatReference(float initialValue) : base(true)
+    {
+        Value = initialValue;
+    }
     public FloatReference(bool useConstant = true, float initialValue = 0f) : base(useConstant)
     {
         Value = initialValue;
@@ -161,6 +165,15 @@ public class DoubleReference : VariableReference<double>
 [System.Serializable]
 public class IntReference : VariableReference<int>
 {
+    public IntReference()
+    {
+
+    }
+    public IntReference(int startingValue) : this()
+    {
+        useConstant = true;
+        Value = startingValue;
+    }
     // Operations mutate
     //public static IntReference operator +(IntReference a, int b)
     //{
