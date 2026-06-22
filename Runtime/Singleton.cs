@@ -63,6 +63,19 @@ public class SingletonSO<T> : ScriptableObject where T : SingletonSO<T>
     }
 
 }
+public class SingletonInstance<T> where T : new()
+{
+    private static T instance;
+    public static T Instance
+    {
+        get
+        {
+            if (instance == null) instance = new();
+            return instance;
+        }
+    }
+
+}
 //public class SingletonNetwork<T> : NetworkBehaviour where T : Component
 //{
 //    public static T Instance { get; private set; }
