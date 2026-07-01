@@ -101,12 +101,14 @@ public static class Extensions
         }
         return result;
     }
-    public static T MinElement<T>(this IEnumerable<T> collection, System.Func<T, float> selector)
+    public static T MinElementOrDefault<T>(this IEnumerable<T> collection, System.Func<T, float> selector)
     {
+        if (collection.IsEmpty()) return default(T);
         return collection.Aggregate((min, x) => (selector(x) < selector(min) ? x : min));
     }
-    public static T MaxElement<T>(this IEnumerable<T> collection, System.Func<T, float> selector)
+    public static T MaxElementOrDefault<T>(this IEnumerable<T> collection, System.Func<T, float> selector)
     {
+        if (collection.IsEmpty()) return default(T);
         return collection.Aggregate((min, x) => (selector(x) > selector(min) ? x : min));
     }
     /// <summary>
