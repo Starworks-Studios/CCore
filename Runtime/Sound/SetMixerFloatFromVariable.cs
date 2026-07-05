@@ -33,6 +33,6 @@ public class SetMixerFloatFromVariable : MonoBehaviour
 
     public static float PercentToVolume(float percentage)
     {
-        return Mathf.Log10(Mathf.Max(0.0005f, percentage * 2f)) * 25f;
+        return Mathf.Log10(Mathf.Max(0.0001f, percentage * 2f)) * 25f;
     }
 }
