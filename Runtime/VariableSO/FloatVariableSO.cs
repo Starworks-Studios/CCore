@@ -9,5 +9,9 @@ public class FloatVariableSO : VariableSO<float>
     {
         Debug.Log(name + " value: " + Value);
     }
+    public void Increment(float change)
+    {
+        Value += change;
+    }
 
 }
