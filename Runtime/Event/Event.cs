@@ -21,6 +21,7 @@ public class Event : EventBroadcaster
     {
         myEvent -= function;
     }
+    public bool HasAnySubscribers => myEvent != null;
 }
 
 public class Event<T> : EventBroadcaster<T>, EventBroadcaster
