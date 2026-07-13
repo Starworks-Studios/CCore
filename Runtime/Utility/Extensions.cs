@@ -10,23 +10,25 @@ public static class Extensions
 {
     public static void DestroyChildren(this Transform transform)
     {
-        for (int c = transform.childCount - 1; c >= 0; --c)
-        {
-            var go = transform.GetChild(c).gameObject;
-
+        transform?.GetChildren().ForEach(child => child?.gameObject.DestroySafe());
+    }
+    /// <summary>
+    /// Can be called to destroy a GameObject at edit-time, run-time, or in a build
+    /// </summary>
+    /// <param name="go"></param>
+    public static void DestroySafe(this GameObject go)
+    {
 #if UNITY_EDITOR
-            if (!Application.isPlaying)
+        if (!Application.isPlaying)
+        {
+            UnityEditor.EditorApplication.delayCall += () =>
             {
-                UnityEditor.EditorApplication.delayCall += () =>
-                {
-                    Object.DestroyImmediate(go);
-                };
-                continue;
-            }
-#endif
-            Object.Destroy(go);
-
+                Object.DestroyImmediate(go);
+            };
+            return;
         }
+#endif
+        Object.Destroy(go);
     }
 
     public static List<Transform> GetChildren(this Transform transform)
@@ -175,6 +177,14 @@ public static class Extensions
         {
             a(e.ElementAt(i));
         }
+    }
+    // We must use a UnityEngine.Object type so that we can correctly nullcheck if it has been destroyed
+    public static void ClearNullValues<K, V>(this Dictionary<K, V> dict) where V : UnityEngine.Object
+    {
+        dict.Keys.Where(k =>
+        {
+            return dict[k] == null;
+        }).ToArray().ForEach(k => dict.Remove(k));
     }
 
     public static void Swap<T>(ref T a, ref T b)
