@@ -56,4 +56,16 @@ public static class VectorExtensions
     {
         return v2.x <= value && value <= v2.y;
     }
+    /// <summary>
+    /// Returns a copy of this vector that is at least as large as the passed vector in that direction
+    /// </summary>
+    public static Vector3 SetMinimumMagnitudeTowards(this Vector3 velocity, Vector3 minimum)
+    {
+        var alignedVelocity = Vector3.Project(velocity, minimum);
+
+        var changeToReachMinimum = minimum - alignedVelocity;
+        if (Vector3.Dot(changeToReachMinimum, minimum) < 0f) return velocity; // already over the minimum
+
+        return velocity + changeToReachMinimum;
+    }
 }

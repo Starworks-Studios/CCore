@@ -53,6 +53,10 @@ public class SoundLooper : MonoBehaviour
         if (loopEnabled == enable) return;
         Enable(enable);
     }
+    public void SetVolume(float volume)
+    {
+        this.volume = volume;
+    }
     private void Enable(bool enable)
     {
         loopEnabled = enable;
