@@ -103,6 +103,42 @@ public static class Extensions
         }
         return result;
     }
+    /// <summary>
+    /// Randomly picks out a couple unique items from a collection of items according to each item's weight.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="sourceList">The collection to choose from</param>
+    /// <param name="pickCount">How many items to try to draw. May return fewer items if there aren't enough</param>
+    /// <param name="GetWeight">A function that returns the weight for any given item</param>
+    /// <returns>A list of unique items</returns>
+    public static ICollection<T> GetNRandomWeighted<T>(this IEnumerable<T> sourceList, int pickCount, System.Func<T, float> GetWeight)
+    {
+        pickCount = Mathf.Min(pickCount, sourceList.Count());
+        var picks = new List<T>();
+        var itemsLeft = new List<T>(sourceList);
+        float totalWeight = itemsLeft.Sum(item => Mathf.Max(0f, GetWeight(item)));
+
+        for (int i = 0; i < pickCount; ++i)
+        {
+            T toAdd = itemsLeft.GetRandom(); // initialize to something that won't be used
+            float randomWeight = Random.Range(0f, totalWeight);
+            foreach (var item in itemsLeft)
+            {
+                var weight = Mathf.Max(0f, GetWeight(item));
+                if (randomWeight < weight)
+                {
+                    toAdd = item;
+                    totalWeight -= weight;
+                    break;
+                }
+                randomWeight -= weight;
+            }
+
+            itemsLeft.Remove(toAdd);
+            picks.Add(toAdd);
+        }
+        return picks;
+    }
     public static T MinElementOrDefault<T>(this IEnumerable<T> collection, System.Func<T, float> selector)
     {
         if (collection.IsEmpty()) return default(T);
