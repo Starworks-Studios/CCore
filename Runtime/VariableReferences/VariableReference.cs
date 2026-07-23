@@ -15,6 +15,7 @@ public class VariableReference<T> : ISerializationCallbackReceiver, IVariableAcc
 
     [SerializeField] private IVariableSO<T> variable;
     private IVariableSO<T> prevVariable;
+    T lastSerializedValue;
 
     private event Action<T> ChangeEvent;
     private event Action ChangeEventNullParam;
@@ -78,6 +79,18 @@ public class VariableReference<T> : ISerializationCallbackReceiver, IVariableAcc
         }
     }
 
+    public bool Equals(T x, T y)
+    {
+        // 1. Safe Unity Object Null & Lifecycle Check
+        if (x is UnityEngine.Object unityX && y is UnityEngine.Object unityY)
+        {
+            return unityX == unityY; // Correctly uses Unity's custom == operator
+        }
+
+        // 2. Fallback for standard C# types (ints, strings, structs, etc.)
+        return EqualityComparer<T>.Default.Equals(x, y);
+    }
+
     void OnValidate()
     {
         if (prevVariable != variable)
@@ -86,7 +99,11 @@ public class VariableReference<T> : ISerializationCallbackReceiver, IVariableAcc
         }
         if (useConstant)
         {
-            InvokeChangeEvent(Value);
+            if(!Equals(Value, lastSerializedValue))
+            {
+                InvokeChangeEvent(Value);
+                lastSerializedValue = Value;
+            }
         }
     }
 
