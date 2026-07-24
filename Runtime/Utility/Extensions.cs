@@ -214,6 +214,11 @@ public static class Extensions
             a(e.ElementAt(i));
         }
     }
+    public static bool ValidateIndex<T>(this IReadOnlyCollection<T> c, int index)
+    {
+        var count = c.Count;
+        return count > 0 && index >= 0 && index < count;
+    }
     // We must use a UnityEngine.Object type so that we can correctly nullcheck if it has been destroyed
     public static void ClearNullValues<K, V>(this Dictionary<K, V> dict) where V : UnityEngine.Object
     {
