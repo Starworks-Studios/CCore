@@ -69,14 +69,21 @@ public static class Extensions
         axis[collider.direction] = (collider.height - 2f * collider.radius) * 0.5f;
         return Physics.OverlapCapsule(center + axis, center - axis, collider.radius);
     }
-    public static void Invoke(this MonoBehaviour mb, System.Action f, float delay)
+    public static void Invoke(this MonoBehaviour mb, System.Action f, float delay, bool useUnscaled = false)
     {
-        mb.StartCoroutine(InvokeRoutine(f, delay));
+        mb.StartCoroutine(InvokeRoutine(f, delay, useUnscaled));
     }
 
-    private static IEnumerator InvokeRoutine(System.Action f, float delay)
+    private static IEnumerator InvokeRoutine(System.Action f, float delay, bool useUnscaled = false)
     {
-        yield return new WaitForSeconds(delay);
+        if (useUnscaled)
+        {
+            yield return new WaitForSecondsRealtime(delay);
+        }
+        else
+        {
+            yield return new WaitForSeconds(delay);
+        }
         f();
     }
     public static T GetRandom<T>(this IEnumerable<T> collection)
