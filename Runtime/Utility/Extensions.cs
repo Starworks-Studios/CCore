@@ -223,7 +223,7 @@ public static class Extensions
     }
     public static bool ValidateIndex<T>(this IReadOnlyCollection<T> c, int index)
     {
-        var count = c.Count;
+        var count = c?.Count ?? 0;
         return count > 0 && index >= 0 && index < count;
     }
     // We must use a UnityEngine.Object type so that we can correctly nullcheck if it has been destroyed
