@@ -10,10 +10,17 @@ public class MinimumCameraDimensions : MonoBehaviour
     [SerializeField] public float fovShrinkIndex = 1;
     [SerializeField] Camera cam;
     private CinemachineCamera cinemachineCam;
+    CinemachineCamera CinemachineCam
+    {
+        get
+        {
+            if(!cinemachineCam) cinemachineCam = GetComponent<CinemachineCamera>();
+            return cinemachineCam;
+        }
+    }
 
     private void OnEnable()
     {
-        GetComponents();
         fovShrinkIndex = 1;
     }
     private void Update()
@@ -30,19 +37,13 @@ public class MinimumCameraDimensions : MonoBehaviour
     }
     private void OnValidate()
     {
-        GetComponents();
         Set();
-    }
-    void GetComponents()
-    {
-        //cam = GetComponent<Camera>();
-        cinemachineCam = GetComponent<CinemachineCamera>();
     }
 
     void Set()
     {
         float camAspect;
-        if (cinemachineCam)
+        if (CinemachineCam)
         {
             camAspect = cinemachineCam.Lens.Aspect; //stuck at 1?
         }
@@ -62,10 +63,10 @@ public class MinimumCameraDimensions : MonoBehaviour
             orthoSize = minSize.x / camAspect / fovShrinkIndex;
         }
 
-        if (cinemachineCam)
+        if (CinemachineCam)
         {
-            cinemachineCam.Lens.OrthographicSize = orthoSize;
-            cinemachineCam.Lens.FieldOfView = orthoSize;
+            CinemachineCam.Lens.OrthographicSize = orthoSize;
+            CinemachineCam.Lens.FieldOfView = orthoSize;
         }
         else
         {
