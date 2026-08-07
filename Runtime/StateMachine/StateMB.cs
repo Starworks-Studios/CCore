@@ -30,4 +30,5 @@ public abstract class StateMB<SM, S> : MonoBehaviour, IState<SM, S>
         ((IState<SM, S>)this).SetStateInternal(state);
     }
     public virtual void FixedUpdateState() { }
+    public virtual void UpdateState() { }
 }

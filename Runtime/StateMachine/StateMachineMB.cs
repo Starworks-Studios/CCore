@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public abstract class StateMachineMB<SM, S> : MonoBehaviour, IStateMachine<SM, S>
@@ -16,6 +17,10 @@ public abstract class StateMachineMB<SM, S> : MonoBehaviour, IStateMachine<SM, S
         //(IStateMachine<SM, S>).base.SetState(state);
         ((IStateMachine<SM, S>)this).SetStateInternal(state);
         //((SM)this).SetState(state);
+    }
+    protected virtual void Update()
+    {
+        state?.UpdateState();
     }
     protected virtual void FixedUpdate()
     {
