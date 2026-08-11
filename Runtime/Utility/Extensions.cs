@@ -156,6 +156,11 @@ public static class Extensions
         if (collection.IsEmpty()) return default(T);
         return collection.Aggregate((min, x) => (selector(x) > selector(min) ? x : min));
     }
+    public static IEnumerable<T> TiedMaxElements<T>(this IEnumerable<T> collection, System.Func<T, float> selector)
+    {
+        var max = collection.Max(selector);
+        return collection.Where(e => selector(e) == max);
+    }
     /// <summary>
     /// Modify the float array so that the sum of elements is 1
     /// </summary>
