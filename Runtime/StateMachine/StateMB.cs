@@ -15,7 +15,11 @@ public abstract class StateMB<SM, S> : MonoBehaviour, IState<SM, S>
 
     protected virtual void Awake()
     {
-        StateMachine = GetComponentInParent<SM>();
+        StateMachine = FindStateMachine();
+    }
+    protected virtual SM FindStateMachine()
+    {
+        return GetComponentInParent<SM>();
     }
 
     protected virtual void OnDisable() { }
