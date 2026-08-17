@@ -88,7 +88,10 @@ public static class Extensions
     }
     public static T GetRandom<T>(this IEnumerable<T> collection)
     {
-        var c = collection.ToArray();
+        return collection.ToArray().GetRandom();
+    }
+    public static T GetRandom<T>(this T[] c)
+    {
         if (c.Length <= 0) return default(T);
         return c[Random.Range(0, c.Length)];
     }
