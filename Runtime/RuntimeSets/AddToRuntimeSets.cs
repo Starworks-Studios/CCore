@@ -15,7 +15,7 @@ public abstract class AddToRuntimeSets<T> : MonoBehaviour
     private void OnEnable()
     {
         thing = GetThing();
-        foreach (RuntimeSet<T> set in runtimeSets)
+        foreach (var set in runtimeSets)
         {
             set.Add(thing);
         }
@@ -23,7 +23,7 @@ public abstract class AddToRuntimeSets<T> : MonoBehaviour
 
     private void OnDisable()
     {
-        foreach (RuntimeSet<T> set in runtimeSets)
+        foreach (var set in runtimeSets)
         {
             set.Remove(thing);
         }
