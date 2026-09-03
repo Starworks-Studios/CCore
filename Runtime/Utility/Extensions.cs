@@ -41,6 +41,15 @@ public static class Extensions
         return children;
     }
 
+    public static T ReturnOrFindComponent<T>(this MonoBehaviour mb, ref T component, System.Func<T> finder)
+    {
+        if (component == null)
+        {
+            return component = finder();
+        }
+        return component;
+    }
+
     public static GameObject InstantiatePrefab(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent)
     {
         GameObject go;

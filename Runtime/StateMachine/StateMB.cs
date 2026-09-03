@@ -9,7 +9,7 @@ public abstract class StateMB<SM, S> : MonoBehaviour, IState<SM, S>
     protected SM stateMachine;
 
     public SM StateMachine { 
-        get => stateMachine; 
+        get => this.ReturnOrFindComponent(ref stateMachine, FindStateMachine); 
         set => stateMachine = value; 
     }
 
