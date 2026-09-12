@@ -43,7 +43,7 @@ public static class Extensions
 
     public static T ReturnOrFindComponent<T>(this MonoBehaviour mb, ref T component, System.Func<T> finder)
     {
-        if (component == null)
+        if (component == null || component.Equals(null))
         {
             return component = finder();
         }
