@@ -109,7 +109,7 @@ public class SoundLooper : MonoBehaviour
                 {
                     pitch = source.pitch;
                 }
-                t += Time.unscaledDeltaTime*pitch*a;
+                t += TimescaleKeeper.unscaledDeltaTime*pitch*a;
                 if (t >= 1f) break;
                 yield return null;
             }
@@ -124,8 +124,8 @@ public class SoundLooper : MonoBehaviour
         float pitchOffset = source.pitch - 1f;
         while (progress < 1f && source != null)
         {
-            //progress = Mathf.Min(1f, progress + Time.unscaledDeltaTime / duration);
-            progress = Mathf.Min(1f, progress + Time.unscaledDeltaTime / (duration * pitch));
+            //progress = Mathf.Min(1f, progress + TimescaleKeeper.unscaledDeltaTime / duration);
+            progress = Mathf.Min(1f, progress + TimescaleKeeper.unscaledDeltaTime / (duration * pitch));
             source.volume = sound.Volume * TotalVolume * soundLoop.volumeCurve.Evaluate(progress);
             source.pitch = pitch + pitchOffset;
             yield return null;

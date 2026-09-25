@@ -7,6 +7,6 @@ public class SpringFollowLateUpdate : SpringFollow
     [SerializeField] bool useScaledTime = true;
     private void LateUpdate()
     {
-        Follow(useScaledTime ? Time.deltaTime : Time.unscaledDeltaTime);
+        Follow(useScaledTime ? Time.deltaTime : TimescaleKeeper.unscaledDeltaTime);
     }
 }

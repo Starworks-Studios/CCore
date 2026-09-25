@@ -9,7 +9,7 @@ public class WaitForSecondsRealtimeFreezable : CustomYieldInstruction
     {
         get
         {
-            if (Time.timeScale > 0f) secondsRemaining -= Time.unscaledDeltaTime;
+            if (Time.timeScale > 0f) secondsRemaining -= TimescaleKeeper.unscaledDeltaTime;
 
             return secondsRemaining > 0f;
         }
@@ -27,7 +27,7 @@ public class WaitForSecondsRealtimePausible : CustomYieldInstruction
     {
         get
         {
-            if (!TimescaleKeeper.IsPaused) secondsRemaining -= Time.unscaledDeltaTime;
+            if (!TimescaleKeeper.IsPaused) secondsRemaining -= TimescaleKeeper.unscaledDeltaTime;
 
             return secondsRemaining > 0f;
         }

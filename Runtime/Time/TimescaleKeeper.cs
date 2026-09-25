@@ -17,6 +17,20 @@ public class TimescaleKeeper : MonoBehaviour
     public static bool IsPaused => instance ? instance.isPaused.Value : false;
 
     public static TimescaleKeeper instance;
+    /// <summary>
+    /// This unscaled delta time should behave as expected while recording
+    /// </summary>
+    public static float unscaledDeltaTime
+    {
+        get
+        {
+#if UNITY_EDITOR
+            return Time.captureFramerate > 0 ? Time.captureDeltaTime : Time.unscaledDeltaTime;
+#else
+            return Time.unscaledDeltaTime;
+#endif
+        }
+    }
     private void Awake()
     {
         instance = this;
