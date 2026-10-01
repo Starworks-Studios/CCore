@@ -2,39 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaitForSecondsRealtimeFreezable : CustomYieldInstruction
+public class WaitForSecondsRealtimeCustom : CustomYieldInstruction
 {
     private float secondsRemaining;
     public override bool keepWaiting
     {
         get
         {
-            if (Time.timeScale > 0f) secondsRemaining -= TimescaleKeeper.unscaledDeltaTime;
+            if (CanCountDown) secondsRemaining -= TimescaleKeeper.unscaledDeltaTime;
 
             return secondsRemaining > 0f;
         }
     }
 
-    public WaitForSecondsRealtimeFreezable(float seconds)
+    protected virtual bool CanCountDown => true;
+
+    public WaitForSecondsRealtimeCustom(float seconds)
     {
         secondsRemaining = seconds;
     }
 }
-public class WaitForSecondsRealtimePausible : CustomYieldInstruction
+
+public class WaitForSecondsRealtimeFreezable : WaitForSecondsRealtimeCustom
 {
-    private float secondsRemaining;
-    public override bool keepWaiting
-    {
-        get
-        {
-            if (!TimescaleKeeper.IsPaused) secondsRemaining -= TimescaleKeeper.unscaledDeltaTime;
+    protected override bool CanCountDown => Time.timeScale > 0f;
 
-            return secondsRemaining > 0f;
-        }
-    }
-
-    public WaitForSecondsRealtimePausible(float seconds)
-    {
-        secondsRemaining = seconds;
-    }
+    public WaitForSecondsRealtimeFreezable(float seconds) : base(seconds) { }
+}
+public class WaitForSecondsRealtimePausible : WaitForSecondsRealtimeCustom
+{
+    protected override bool CanCountDown => !TimescaleKeeper.IsPaused;
+    public WaitForSecondsRealtimePausible(float seconds) : base(seconds) { }
 }

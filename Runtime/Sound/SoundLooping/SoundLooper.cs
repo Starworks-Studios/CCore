@@ -99,7 +99,7 @@ public class SoundLooper : MonoBehaviour
             StartCoroutine(LoopingSource(source));
             // here I set it to "affected by the time scale"
             float clipLength = source.clip.length;
-            yield return new WaitForSecondsRealtime(sound.minPlayDelay);
+            yield return new WaitForSecondsRealtimeCustom(sound.minPlayDelay);
             float t = 0f;
             float pitch = 1f;
             float a = 1f / (clipLength * soundLoop.startStagger);

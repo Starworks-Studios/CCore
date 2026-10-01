@@ -85,7 +85,7 @@ public class SoundManager : MonoBehaviour
     }
     private static IEnumerator destroyIn(AudioSource source, float time)
     {
-        yield return new WaitForSecondsRealtime(time);
+        yield return new WaitForSecondsRealtimeCustom(time);
         if (source != null)
         {
             source.Stop();

@@ -87,7 +87,7 @@ public static class Extensions
     {
         if (useUnscaled)
         {
-            yield return new WaitForSecondsRealtime(delay);
+            yield return new WaitForSecondsRealtimeCustom(delay);
         }
         else
         {

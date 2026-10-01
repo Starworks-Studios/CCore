@@ -42,7 +42,7 @@ public static class SceneLoader
             if (transitionEffect)
             {
                 transitionEffect.Out();
-                yield return new WaitForSecondsRealtime(transitionEffect.OutDuration);
+                yield return new WaitForSecondsRealtimeCustom(transitionEffect.OutDuration);
             }
         }
         var timeBegunLoad = Time.realtimeSinceStartupAsDouble;
@@ -63,7 +63,7 @@ public static class SceneLoader
         //Begins the transition effect
         //Debug.Log("transitionEffect: " + transitionEffect);
         var extraSecondsToWait = transition.minLoadTime - (Time.realtimeSinceStartupAsDouble - timeBegunLoad);
-        if(extraSecondsToWait > 0f) yield return new WaitForSecondsRealtime((float)extraSecondsToWait);
+        if(extraSecondsToWait > 0f) yield return new WaitForSecondsRealtimeCustom((float)extraSecondsToWait);
 
         if (transitionEffect)
         {
