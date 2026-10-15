@@ -14,7 +14,7 @@ public abstract class IVariableSO : ScriptableObject, ISubscribable<Action>
 
     protected event Action VoidChangeEvent;
 
-    protected void OnEnable()
+    protected virtual void OnEnable()
     {
         hideFlags = HideFlags.DontUnloadUnusedAsset; //Colin: may stop data getting reset between scene loads
     }
