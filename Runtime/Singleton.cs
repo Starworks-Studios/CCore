@@ -74,6 +74,7 @@ public class SingletonInstance<T> where T : new()
             return instance;
         }
     }
+    public static bool EnsureInstance() => Instance != null;
 
 }
 //public class SingletonNetwork<T> : NetworkBehaviour where T : Component
