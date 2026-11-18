@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Scripting.LifecycleManagement;
 using UnityEngine;
 //using Unity.Netcode;
 
@@ -63,7 +64,8 @@ public class SingletonSO<T> : ScriptableObject where T : SingletonSO<T>
     }
 
 }
-public class SingletonInstance<T> where T : new()
+[AutoStaticsCleanup]
+public partial class SingletonInstance<T> where T : new()
 {
     private static T instance;
     public static T Instance
